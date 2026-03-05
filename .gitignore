@@ -1,0 +1,37 @@
+# ── Fichiers uploadés (photos & documents des étudiants) ──────
+uploads/photos/*
+uploads/documents/*
+
+# Garder les dossiers vides avec leur protection
+!uploads/photos/.htaccess
+!uploads/photos/index.php
+!uploads/documents/.htaccess
+!uploads/documents/index.php
+!uploads/.htaccess
+!uploads/index.php
+
+# ── Environnement & config sensible ───────────────────────────
+# Ne pas versionner la config si elle contient des mots de passe
+# Dupliquer database.php en database.example.php avant de commiter
+# config/database.php
+
+# ── OS & éditeurs ─────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# ── Logs & temporaires ────────────────────────────────────────
+*.log
+*.tmp
+*.cache
+
+# ── Dépendances (si Composer est ajouté plus tard) ────────────
+/vendor/
+composer.lock
