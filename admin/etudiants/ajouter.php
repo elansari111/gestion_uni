@@ -1,0 +1,107 @@
+<?php
+/**
+ * admin/etudiants/ajouter.php — Formulaire d'ajout d'un étudiant
+ */
+require_once '../../includes/auth_check_admin.php';
+require_once '../../config/database.php';
+
+$pdo      = getConnexion();
+$filieres = $pdo->query('SELECT CodeF, IntituleF FROM filieres ORDER BY IntituleF')->fetchAll();
+
+$erreurs = $_SESSION['form_erreurs'] ?? [];
+$values  = $_SESSION['form_values']  ?? [];
+unset($_SESSION['form_erreurs'], $_SESSION['form_values']);
+
+$page_title = 'Ajouter un étudiant';
+$css_depth  = '../../assets/';
+$nav_links  = [
+    ['href'=>'../dashboard.php',       'label'=>'📊 Tableau de bord'],
+    ['href'=>'liste.php',              'label'=>'🎓 Étudiants'],
+    ['href'=>'../filieres/liste.php',  'label'=>'📚 Filières'],
+    ['href'=>'../../logout.php',       'label'=>'⏻ Déconnexion'],
+];
+require_once '../../includes/header.php';
+?>
+
+<div class="card">
+    <h2>➕ Ajouter un Étudiant</h2>
+
+    <?php if (!empty($erreurs)): ?>
+        <div class="alert alert-danger">
+            <?php foreach ($erreurs as $err): ?>
+                <div>• <?= htmlspecialchars($err) ?></div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
+    <form action="ajouter_traitement.php" method="POST" enctype="multipart/form-data">
+        <div class="form-row">
+            <div class="form-group">
+                <label>Code étudiant <span style="color:#C72C82">*</span></label>
+                <input type="text" name="Code" class="form-control" required maxlength="10"
+                       placeholder="ex: E009"
+                       value="<?= htmlspecialchars($values['Code'] ?? '') ?>">
+            </div>
+            <div class="form-group">
+                <label>Filière</label>
+                <select name="Filiere" class="form-control">
+                    <option value="">— Sélectionner —</option>
+                    <?php foreach ($filieres as $f): ?>
+                    <option value="<?= htmlspecialchars($f['CodeF']) ?>"
+                        <?= ($values['Filiere'] ?? '') === $f['CodeF'] ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($f['IntituleF']) ?>
+                    </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Nom <span style="color:#C72C82">*</span></label>
+                <input type="text" name="Nom" class="form-control" required maxlength="50"
+                       value="<?= htmlspecialchars($values['Nom'] ?? '') ?>">
+            </div>
+            <div class="form-group">
+                <label>Prénom <span style="color:#C72C82">*</span></label>
+                <input type="text" name="Prenom" class="form-control" required maxlength="50"
+                       value="<?= htmlspecialchars($values['Prenom'] ?? '') ?>">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Note /20</label>
+                <input type="number" name="Note" class="form-control" min="0" max="20" step="0.01"
+                       placeholder="Laisser vide si non évalué"
+                       value="<?= htmlspecialchars($values['Note'] ?? '') ?>">
+            </div>
+            <div class="form-group">
+                <label>Date de naissance</label>
+                <input type="date" name="date_naissance" class="form-control"
+                       value="<?= htmlspecialchars($values['date_naissance'] ?? '') ?>">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" class="form-control" maxlength="100"
+                       value="<?= htmlspecialchars($values['email'] ?? '') ?>">
+            </div>
+            <div class="form-group">
+                <label>Téléphone</label>
+                <input type="text" name="telephone" class="form-control" maxlength="20"
+                       value="<?= htmlspecialchars($values['telephone'] ?? '') ?>">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Photo de profil (JPG, JPEG, PNG — max 2 Mo)</label>
+            <input type="file" name="photo" class="form-control" accept=".jpg,.jpeg,.png">
+            <small style="color:#888;">Optionnel. La photo sera redimensionnée si nécessaire.</small>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:10px;">
+            <button type="submit" class="btn btn-primary">💾 Enregistrer</button>
+            <a href="liste.php" class="btn btn-outline">Annuler</a>
+        </div>
+    </form>
+</div>
+
+<?php require_once '../../includes/footer.php'; ?>

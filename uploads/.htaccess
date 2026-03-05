@@ -1,0 +1,7 @@
+# Sécurité : interdire l'exécution de PHP dans ce dossier et ses sous-dossiers
+Options -ExecCGI
+AddHandler cgi-script .php .php3 .php4 .php5 .phtml .pl .py .jsp .asp .aspx .sh .cgi
+<FilesMatch "\.(php|php3|php4|php5|phtml|pl|py|jsp|asp|aspx|sh|cgi)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
