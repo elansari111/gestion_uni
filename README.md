@@ -185,14 +185,3 @@ http://localhost/gestion_upf/
 | `$_SERVER` | REQUEST_METHOD, REMOTE_ADDR, HTTP_USER_AGENT |
 | `$_COOKIE` | Mémorisation du dernier login (30 jours) |
 
----
-
-## 📝 Auteur
-
-Réalisé dans le cadre du **TP Final PHP Procédural**  
-Filière Génie Informatique — 3ème Année  
-**Université Privée de Fès** — Pr. M. KZADRI — 2025-2026
-
----
-
-> ⚠️ **Travail individuel.** Document réservé aux étudiants inscrits.
