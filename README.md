@@ -100,7 +100,7 @@ gestion_upf/
 
 **1. Cloner le dépôt**
 ```bash
-git clone https://github.com/VOTRE_USER/gestion_upf.git
+git clone https://github.com/elansari111/gestion_upf.git
 ```
 
 **2. Copier dans htdocs**
